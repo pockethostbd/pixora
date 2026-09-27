@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080b18">
+<meta name="description" content="Pixora — explore and download beautiful images.">
+<title>Pixora — Explore Images</title>
+<link rel="preconnect" href="https://www.gstatic.com">
+<style>
+:root{
+  --bg:#f6f7fb;--surface:#fff;--text:#111827;--muted:#667085;--line:#e7e9ef;
+  --brand:#2563eb;--brand2:#7c3aed;--shadow:0 10px 30px rgba(15,23,42,.08);
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button{font:inherit}img{display:block;max-width:100%}
+.header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.88);backdrop-filter:blur(16px);border-bottom:1px solid rgba(231,233,239,.8)}
+.nav{max-width:1400px;margin:auto;height:72px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit;font-weight:800;font-size:22px;letter-spacing:-.6px}
+.logo{width:40px;height:40px;border-radius:12px;object-fit:cover;box-shadow:0 5px 15px rgba(37,99,235,.2)}
+.actions{display:flex;align-items:center;gap:8px}
+.iconbtn{width:42px;height:42px;border:1px solid var(--line);background:var(--surface);border-radius:13px;display:grid;place-items:center;cursor:pointer;color:var(--text)}
+.hero{max-width:1400px;margin:auto;padding:58px 22px 28px}
+.hero h1{margin:0;font-size:clamp(34px,6vw,64px);line-height:1.02;letter-spacing:-2.8px;max-width:800px}
+.hero h1 span{background:linear-gradient(90deg,#2563eb,#7c3aed);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:17px;line-height:1.7;max-width:650px;margin:18px 0 0}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.pill{background:var(--surface);border:1px solid var(--line);padding:9px 13px;border-radius:999px;color:var(--muted);font-size:13px}
+.gallery{max-width:1400px;margin:auto;padding:18px 22px 70px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 6px 20px rgba(15,23,42,.045);content-visibility:auto;contain-intrinsic-size:300px}
+.photo{width:100%;aspect-ratio:4/5;object-fit:cover;background:#e9edf5;cursor:zoom-in;transition:transform .25s ease}
+.card:hover .photo{transform:scale(1.025)}
+.cardfoot{padding:11px;display:flex;justify-content:center}
+.download{width:100%;border:0;border-radius:12px;padding:11px 14px;background:#111827;color:#fff;font-weight:700;cursor:pointer}
+.download:active{transform:scale(.985)}
+.skeleton{aspect-ratio:4/5;background:linear-gradient(110deg,#edf0f6 8%,#f7f8fb 18%,#edf0f6 33%);background-size:200% 100%;animation:sh 1.2s linear infinite}
+@keyframes sh{to{background-position:-200% 0}}
+.status{text-align:center;color:var(--muted);padding:24px;font-size:14px;grid-column:1/-1}
+.loadmore{display:block;margin:0 auto 50px;padding:12px 20px;border-radius:13px;border:1px solid var(--line);background:var(--surface);font-weight:700;cursor:pointer}
+.loadmore[hidden]{display:none}
+.viewer{position:fixed;inset:0;background:rgba(2,6,23,.9);z-index:50;display:none;align-items:center;justify-content:center;padding:20px}
+.viewer.open{display:flex}.viewer img{max-width:min(94vw,1200px);max-height:86vh;object-fit:contain;border-radius:14px}
+.close{position:absolute;right:18px;top:18px;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.13);color:#fff;font-size:26px;cursor:pointer}
+.viewerNav{position:absolute;bottom:18px;display:flex;gap:10px}.viewerNav button{border:0;border-radius:12px;padding:10px 16px;background:#fff;color:#111827;font-weight:700}
+.error{max-width:700px;margin:20px auto;padding:14px 16px;border:1px solid #fecaca;background:#fff1f2;color:#991b1b;border-radius:14px}
+@media(max-width:1050px){.gallery{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){.nav{height:62px;padding:0 14px}.hero{padding:38px 16px 20px}.hero h1{letter-spacing:-1.8px}.hero p{font-size:15px}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:14px 12px 55px}.card{border-radius:14px}.cardfoot{padding:8px}.download{font-size:13px;padding:10px}.logo{width:36px;height:36px}}
+@media(max-width:420px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.photo{aspect-ratio:3/4}}
+@media(prefers-color-scheme:dark){
+:root{--bg:#070a12;--surface:#0e1422;--text:#f4f7fb;--muted:#98a2b3;--line:#20283a;--shadow:none}
+.header{background:rgba(7,10,18,.84)}.iconbtn{background:var(--surface)}.download{background:#f8fafc;color:#0b1020}.skeleton{background:linear-gradient(110deg,#151b2a 8%,#1d2536 18%,#151b2a 33%);background-size:200% 100%}
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <nav class="nav">
+    <a class="brand" href="#">
+      <img class="logo" src="https://pockethostbd.github.io/drive-one/picture/pixora-logo.png" alt="Pixora">
+      <span>Pixora</span>
+    </a>
+    <div class="actions"><button class="iconbtn" id="topBtn" aria-label="Back to top">↑</button></div>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Explore something <span>beautiful.</span></h1>
+  <p>A clean, fast image collection made for discovering pictures one by one. Open any image, explore it, and download it.</p>
+  <div class="stats"><span class="pill" id="count">Loading…</span><span class="pill">10 images per load</span></div>
+</section>
+
+<main>
+  <div id="error" class="error" hidden></div>
+  <section class="gallery" id="gallery" aria-live="polite"></section>
+  <div class="status" id="status">Loading images…</div>
+  <button class="loadmore" id="loadMore" hidden>Load 10 more</button>
+</main>
+
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="close" id="closeViewer" aria-label="Close">×</button>
+  <img id="viewerImg" alt="">
+  <div class="viewerNav">
+    <button id="prevBtn">Previous</button><button id="nextBtn">Next</button>
+  </div>
+</div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import {getFirestore,collection,query,orderBy,limit,getDocs,startAfter} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey:"AIzaSyCa3miuF5YPQEKbai0Y-IK0IpTXWki7Bjk",
+  authDomain:"banglabazarbd.firebaseapp.com",
+  projectId:"banglabazarbd",
+  storageBucket:"banglabazarbd.firebasestorage.app",
+  messagingSenderId:"857609771799",
+  appId:"1:857609771799:web:872da567e55515f6c5b552"
+};
+const app=initializeApp(firebaseConfig), db=getFirestore(app);
+const gallery=document.getElementById("gallery"),statusEl=document.getElementById("status");
+const loadBtn=document.getElementById("loadMore"),countEl=document.getElementById("count"),errorEl=document.getElementById("error");
+const PAGE=10; let cursor=null, loading=false, done=false, images=[], viewerIndex=0;
+
+function escUrl(v){try{return new URL(v).href}catch{return ""}}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function showError(msg){errorEl.textContent=msg;errorEl.hidden=false}
+function skeletons(){for(let i=0;i<PAGE;i++){const c=document.createElement("article");c.className="card";const s=document.createElement("div");s.className="skeleton";c.appendChild(s);gallery.appendChild(c)}}
+function removeSkeletons(){gallery.querySelectorAll(".skeleton").forEach(s=>s.closest(".card")?.remove())}
+
+function addCard(url,index){
+  const card=document.createElement("article");card.className="card";
+  const img=document.createElement("img");img.className="photo";img.loading="lazy";img.decoding="async";img.referrerPolicy="no-referrer";img.alt="Pixora image";img.src=url;
+  img.onerror=()=>{img.style.opacity=".35";img.alt="Image unavailable"};
+  img.addEventListener("click",()=>openViewer(index));
+  const foot=document.createElement("div");foot.className="cardfoot";
+  const b=document.createElement("button");b.className="download";b.textContent="Download";b.addEventListener("click",e=>{e.stopPropagation();downloadImage(url)});
+  foot.appendChild(b);card.append(img,foot);gallery.appendChild(card);
+}
+async function downloadImage(url){
+  const safe=escUrl(url);if(!safe)return;
+  try{
+    const r=await fetch(safe,{mode:"cors",cache:"no-store"});if(!r.ok)throw new Error();
+    const blob=await r.blob(), a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="pixora-image";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+  }catch{window.open(safe,"_blank","noopener,noreferrer")}
+}
+function openViewer(i){viewerIndex=i;viewerImg.src=images[i];viewer.classList.add("open");document.body.style.overflow="hidden"}
+function closeViewer(){viewer.classList.remove("open");document.body.style.overflow="";viewerImg.removeAttribute("src")}
+function moveViewer(d){viewerIndex=(viewerIndex+d+images.length)%images.length;viewerImg.src=images[viewerIndex]}
+async function loadPage(){
+  if(loading||done)return;loading=true;statusEl.textContent="Loading images…";skeletons();
+  try{
+    let q=query(collection(db,"images"),orderBy("createdAt","desc"),limit(PAGE));
+    if(cursor)q=query(collection(db,"images"),orderBy("createdAt","desc"),startAfter(cursor),limit(PAGE));
+    const snap=await getDocs(q);removeSkeletons();
+    const batch=[];snap.forEach(d=>{const u=escUrl(d.data().imageUrl);if(u)batch.push(u)});
+    shuffle(batch);images.push(...batch);batch.forEach((u,i)=>addCard(u,images.length-batch.length+i));
+    if(snap.docs.length)cursor=snap.docs[snap.docs.length-1];else done=true;
+    if(snap.docs.length<PAGE)done=true;
+    countEl.textContent=`${images.length}+ images explored`;
+    statusEl.textContent=done?(images.length?"You've reached the end.":"No images yet."): "Scroll to explore more";
+    loadBtn.hidden=done;
+  }catch(e){
+    removeSkeletons();showError("Pixora could not load the gallery. Check Firestore rules and your Firebase connection.");statusEl.textContent="Unable to load images.";console.error(e);
+  }finally{loading=false}
+}
+const viewer=document.getElementById("viewer"),viewerImg=document.getElementById("viewerImg");
+document.getElementById("closeViewer").onclick=closeViewer;
+document.getElementById("prevBtn").onclick=()=>moveViewer(-1);
+document.getElementById("nextBtn").onclick=()=>moveViewer(1);
+viewer.addEventListener("click",e=>{if(e.target===viewer)closeViewer()});
+document.addEventListener("keydown",e=>{if(!viewer.classList.contains("open"))return;if(e.key==="Escape")closeViewer();if(e.key==="ArrowLeft")moveViewer(-1);if(e.key==="ArrowRight")moveViewer(1)});
+loadBtn.onclick=loadPage;document.getElementById("topBtn").onclick=()=>scrollTo({top:0,behavior:"smooth"});
+loadPage();
+</script>
+</body>
+</html>
