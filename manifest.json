@@ -1,1 +1,24 @@
-{"name":"Pixora — Infinity Is Calling","short_name":"Pixora","description":"Explore an infinite stream of random images and videos.","start_url":"/","scope":"/","display":"standalone","orientation":"portrait-primary","background_color":"#f4f6fa","theme_color":"#080b18","lang":"en","categories":["photography","entertainment"],"icons":[{"src":"https://pockethostbd.github.io/drive-one/picture/pixora-logo.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}
+{
+  "name": "Pixora \u2014 Infinity Is Calling",
+  "short_name": "Pixora",
+  "description": "Explore Pixora's endless photos, videos and Premium section.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f4f6fa",
+  "theme_color": "#080b18",
+  "lang": "en",
+  "categories": [
+    "photography",
+    "entertainment"
+  ],
+  "icons": [
+    {
+      "src": "https://pockethostbd.github.io/drive-one/picture/pixora-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
